@@ -72,6 +72,11 @@ namespace Frends.Community.Sftp
         public string FileMask { get; set; }
 
         /// <summary>
+        /// Include subdirectories?
+        /// </summary>
+        public bool IncludeSubdirectories { get; set; }
+
+        /// <summary>
         /// Full path to private key file.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]

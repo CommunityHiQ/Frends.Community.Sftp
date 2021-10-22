@@ -38,6 +38,7 @@ Gets directory and file listing of a SFTP server.
 | -------- | -------- | -------- | -------- |
 | IncludeType | `Enum (File, Directory, Both)` | Types to include in the directory listing. | `File` |
 | FileMask | `string` | File mask, supports wildcards. | `*.jpg` |
+| IncludeSubdirectories | `bool` | If set to yes, a recursive search is performed to include the contents of subdirectories. |  |
 | PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
 | Passphrase | `string` | Passphrase for the private key file. |  |
 | Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
@@ -97,3 +98,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 | 1.2.0   | Added Keyboard-interactive auth |
 | 1.3.0   | All possible auth combinations added (username, password, private key file, passphrase, keyboard interactive) |
 | 2.0.0   | Version number update to enable easier update from older sftp package. |
+| 2.1.0   | Added option to include subdirectories. |
