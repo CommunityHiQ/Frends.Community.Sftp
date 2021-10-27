@@ -88,8 +88,8 @@ namespace Frends.Community.Sftp.Tests
         [TestCase("*.jpg", IncludeType.Directory, new string[] { })]
         public void GetDirectoryListIncludeSubdirs(string fileMask, IncludeType includeType, IEnumerable<string> expectedFileNames)
         {
-            var options = new Options { FileMask = fileMask, IncludeType = includeType };
-            var result = CreateSftpTaskInstance().ListDirectoryInclSubdirsInternal(_dummyParams, options, new System.Threading.CancellationToken());
+            var options = new Options { FileMask = fileMask, IncludeType = includeType, IncludeSubdirectories = true };
+            var result = CreateSftpTaskInstance().ListDirectoryInternal(_dummyParams, options, new System.Threading.CancellationToken());
 
             Assert.That(result.Select(f => f.Name), Is.EquivalentTo(expectedFileNames));
         }
@@ -97,8 +97,8 @@ namespace Frends.Community.Sftp.Tests
         [TestCase(null, IncludeType.Both, new[] { "11/16/2020 12:00:00", "11/16/2020 13:01:00", "11/16/2020 17:00:11", "11/16/2020 22:00:00", "11/16/2020 23:00:00", "11/16/2020 12:00:00", "11/16/2020 13:01:00" })]
         public void GetDirectoryListUTCLWTsIncludeSubdirs(string fileMask, IncludeType includeType, IEnumerable<string> expectedLWTs)
         {
-            var options = new Options { FileMask = fileMask, IncludeType = includeType };
-            var result = CreateSftpTaskInstance().ListDirectoryInclSubdirsInternal(_dummyParams, options, new System.Threading.CancellationToken());
+            var options = new Options { FileMask = fileMask, IncludeType = includeType, IncludeSubdirectories = true };
+            var result = CreateSftpTaskInstance().ListDirectoryInternal(_dummyParams, options, new System.Threading.CancellationToken());
 
             Assert.That(result.Select(f => f.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture)), Is.EquivalentTo(expectedLWTs));
         }
@@ -106,8 +106,8 @@ namespace Frends.Community.Sftp.Tests
         [TestCase(null, IncludeType.Both, new[] { "12/08/2020 11:00:00", "12/08/2020 12:00:00", "12/08/2020 13:00:00", "12/08/2020 14:00:00", "12/08/2020 15:00:00", "12/08/2020 11:00:00", "12/08/2020 12:00:00" })]
         public void GetDirectoryListUTCLATsIncludeSubdirs(string fileMask, IncludeType includeType, IEnumerable<string> expectedLATs)
         {
-            var options = new Options { FileMask = fileMask, IncludeType = includeType };
-            var result = CreateSftpTaskInstance().ListDirectoryInclSubdirsInternal(_dummyParams, options, new System.Threading.CancellationToken());
+            var options = new Options { FileMask = fileMask, IncludeType = includeType, IncludeSubdirectories = true };
+            var result = CreateSftpTaskInstance().ListDirectoryInternal(_dummyParams, options, new System.Threading.CancellationToken());
 
             Assert.That(result.Select(f => f.LastAccessTimeUtc.ToString(CultureInfo.InvariantCulture)), Is.EquivalentTo(expectedLATs));
         }
@@ -115,8 +115,8 @@ namespace Frends.Community.Sftp.Tests
         [TestCase(null, IncludeType.Both, new[] { "11/16/2020 12:00:00", "11/16/2020 13:01:00", "11/16/2020 17:00:11", "11/16/2020 22:00:00", "11/16/2020 23:00:00", "11/16/2020 12:00:00", "11/16/2020 13:01:00" })]
         public void GetDirectoryListLWTsIncludeSubdirs(string fileMask, IncludeType includeType, IEnumerable<string> expectedLWTs)
         {
-            var options = new Options { FileMask = fileMask, IncludeType = includeType };
-            var result = CreateSftpTaskInstance().ListDirectoryInclSubdirsInternal(_dummyParams, options, new System.Threading.CancellationToken());
+            var options = new Options { FileMask = fileMask, IncludeType = includeType, IncludeSubdirectories = true };
+            var result = CreateSftpTaskInstance().ListDirectoryInternal(_dummyParams, options, new System.Threading.CancellationToken());
 
             Assert.That(result.Select(f => f.LastWriteTime.ToString(CultureInfo.InvariantCulture)), Is.EquivalentTo(expectedLWTs));
         }
@@ -124,8 +124,8 @@ namespace Frends.Community.Sftp.Tests
         [TestCase(null, IncludeType.Both, new[] { "12/08/2020 11:00:00", "12/08/2020 12:00:00", "12/08/2020 13:00:00", "12/08/2020 14:00:00", "12/08/2020 15:00:00", "12/08/2020 11:00:00", "12/08/2020 12:00:00" })]
         public void GetDirectoryListLATsIncludeSubdirs(string fileMask, IncludeType includeType, IEnumerable<string> expectedLATs)
         {
-            var options = new Options { FileMask = fileMask, IncludeType = includeType };
-            var result = CreateSftpTaskInstance().ListDirectoryInclSubdirsInternal(_dummyParams, options, new System.Threading.CancellationToken());
+            var options = new Options { FileMask = fileMask, IncludeType = includeType, IncludeSubdirectories = true };
+            var result = CreateSftpTaskInstance().ListDirectoryInternal(_dummyParams, options, new System.Threading.CancellationToken());
 
             Assert.That(result.Select(f => f.LastAccessTime.ToString(CultureInfo.InvariantCulture)), Is.EquivalentTo(expectedLATs));
         }
@@ -138,21 +138,24 @@ namespace Frends.Community.Sftp.Tests
         {
             var input = new Parameters
             {
-                Server = "test",
+                Server = "",
                 Port = 22,
-                UserName = "test",
-                Password = "test",
+                UserName = "",
+                Password = "",
                 Directory = "."
             };
 
             var options = new Options
             {
-                FileMask = "*.jpg"
+                IncludeType = IncludeType.Both,
+                IncludeSubdirectories = true
             };
 
+            IEnumerable<string> expectedFileNames = new[] { "test.txt" };
             var result = Sftp.ListDirectory(input, options, new System.Threading.CancellationToken());
+            IEnumerable<string> actualFileNames = result.Select(f => f.Name);
 
-            Assert.That(result, Is.Not.Empty);
+            Assert.That(actualFileNames, Is.EquivalentTo(expectedFileNames));
         }
     }
 }
