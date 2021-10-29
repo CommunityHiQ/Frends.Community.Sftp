@@ -66,7 +66,7 @@ namespace Frends.Community.Sftp
                     if (Regex.IsMatch(file.Name, regexStr, RegexOptions.IgnoreCase))
                         directoryList.Add(file);
                 }
-                if (file.IsDirectory && options.IncludeSubdirectories is true)
+                if (file.IsDirectory && options.IncludeSubdirectories)
                 {
                     directoryList.AddRange(ListDirectoryRecursiveInternal(regexStr, sftp, file.FullPath, options, cancellationToken));
                 }
