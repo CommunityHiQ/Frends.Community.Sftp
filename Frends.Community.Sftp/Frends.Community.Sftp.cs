@@ -36,31 +36,42 @@ namespace Frends.Community.Sftp
 
         internal List<IFileResult> ListDirectoryInternal(Parameters input, Options options, CancellationToken cancellationToken)
         {
-            var result = new List<IFileResult>();
             var connectionInfo = GetConnectionInfo(input, options);
             var regexStr = string.IsNullOrEmpty(options.FileMask) ? string.Empty : WildCardToRegex(options.FileMask);
+            var result = new List<IFileResult>();
 
             var sftp = _sftpService.Value;
             using (sftp.Connect(connectionInfo))
             {
-                var files = sftp.ListDirectory(input.Directory);
-                foreach (var file in files)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    if (options.IncludeType == IncludeType.Both
-                        || (file.IsDirectory && options.IncludeType == IncludeType.Directory)
-                        || (file.IsFile && options.IncludeType == IncludeType.File))
-                    {
-                        if (Regex.IsMatch(file.Name, regexStr, RegexOptions.IgnoreCase))
-                            result.Add(file);
-                    }
-                }
-
+                result = ListDirectoryRecursiveInternal(regexStr, sftp, input.Directory, options, cancellationToken);
                 sftp.Disconnect();
             }
 
             return result;
+        }
+
+        internal List<IFileResult> ListDirectoryRecursiveInternal(string regexStr, ISftpService sftp, string directory, Options options, CancellationToken cancellationToken)
+        {
+            List<IFileResult> directoryList = new List<IFileResult>();
+
+            var files = sftp.ListDirectory(directory);
+            foreach (var file in files)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (options.IncludeType == IncludeType.Both
+                    || (file.IsDirectory && options.IncludeType == IncludeType.Directory)
+                    || (file.IsFile && options.IncludeType == IncludeType.File))
+                {
+                    if (Regex.IsMatch(file.Name, regexStr, RegexOptions.IgnoreCase))
+                        directoryList.Add(file);
+                }
+                if (file.IsDirectory && options.IncludeSubdirectories)
+                {
+                    directoryList.AddRange(ListDirectoryRecursiveInternal(regexStr, sftp, file.FullPath, options, cancellationToken));
+                }
+            }
+            return directoryList;
         }
 
         private static ConnectionInfo GetConnectionInfo(Parameters input, Options options)
