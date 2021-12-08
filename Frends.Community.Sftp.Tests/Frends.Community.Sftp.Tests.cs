@@ -160,7 +160,7 @@ namespace Frends.Community.Sftp.Tests
 
 
         [Test]
-        // [Ignore("This is used to test with an actual SFTP server.")]
+        [Ignore("This is used to test with an actual SFTP server.")]
         public void ReadFiles()
         {
             var input = new PathInput
@@ -168,7 +168,7 @@ namespace Frends.Community.Sftp.Tests
                 Server = "localhost",
                 Port = 22,
                 UserName = "sftpuser",
-                Password = "MtjcaRHvcDIENxC3As4d",
+                Password = "",
                 Directory = "",
                 Path = "sftpuser/data.json"
             };
@@ -198,7 +198,7 @@ namespace Frends.Community.Sftp.Tests
         }
 
         [Test]
-        // [Ignore("This is used to test with an actual SFTP server.")]
+        [Ignore("This is used to test with an actual SFTP server.")]
         public void WriteAndDeleteFiles()
         {
             var input = new WriteBytesInput
@@ -206,7 +206,7 @@ namespace Frends.Community.Sftp.Tests
                 Server = "localhost",
                 Port = 22,
                 UserName = "sftpuser",
-                Password = "MtjcaRHvcDIENxC3As4d",
+                Password = "",
                 Directory = "",
                 Path = "sftpuser/radom.bytes"
             };
@@ -228,7 +228,7 @@ namespace Frends.Community.Sftp.Tests
                 Server = "localhost",
                 Port = 22,
                 UserName = "sftpuser",
-                Password = "MtjcaRHvcDIENxC3As4d",
+                Password = "",
                 Directory = "",
                 Path = "sftpuser/radom.bytes"
             };
@@ -251,7 +251,7 @@ namespace Frends.Community.Sftp.Tests
                 Server = "localhost",
                 Port = 22,
                 UserName = "sftpuser",
-                Password = "MtjcaRHvcDIENxC3As4d",
+                Password = "",
                 Directory = "",
                 Path = "sftpuser/hui.txt"
             };
@@ -264,7 +264,7 @@ namespace Frends.Community.Sftp.Tests
                 Server = "localhost",
                 Port = 22,
                 UserName = "sftpuser",
-                Password = "MtjcaRHvcDIENxC3As4d",
+                Password = "",
                 Directory = "",
                 Path = "sftpuser/hui.txt"
             };
@@ -280,7 +280,7 @@ namespace Frends.Community.Sftp.Tests
 
         }
         [Test]
-        // [Ignore("This is used to test with an actual SFTP server.")]
+        [Ignore("This is used to test with an actual SFTP server.")]
         public void TestEncodings()
         {
             foreach (var enc in new FileEncoding[] { FileEncoding.UTF8, FileEncoding.ANSI, FileEncoding.ASCII, FileEncoding.Unicode, FileEncoding.Other })
@@ -293,7 +293,7 @@ namespace Frends.Community.Sftp.Tests
                     Server = "localhost",
                     Port = 22,
                     UserName = "sftpuser",
-                    Password = "MtjcaRHvcDIENxC3As4d",
+                    Password = "",
                     Directory = "",
                     Path = "sftpuser/hui.txt"
                 };
@@ -320,7 +320,7 @@ namespace Frends.Community.Sftp.Tests
                     Server = "localhost",
                     Port = 22,
                     UserName = "sftpuser",
-                    Password = "MtjcaRHvcDIENxC3As4d",
+                    Password = "",
                     Directory = "",
                     Path = "sftpuser/hui.txt"
                 };
