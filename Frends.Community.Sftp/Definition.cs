@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Renci.SshNet.Sftp;
+using System.Globalization;
 
 namespace Frends.Community.Sftp
 {
@@ -93,6 +94,66 @@ namespace Frends.Community.Sftp
         /// </summary>
         public bool UseKeyboardInteractiveAuthenticationMethod { get; set; }
     }
+    public enum FileEncoding { UTF8, ANSI, ASCII, Unicode, Other }
+    public class TextOption : Options
+    {
+        
+        /// <summary>
+        /// Encoding for the read content. By selecting 'Other' you can use any encoding.
+        /// </summary>
+        public FileEncoding FileEncoding { get; set; }
+
+        [UIHint(nameof(FileEncoding), "", FileEncoding.UTF8)]
+        public bool EnableBom { get; set; }
+
+        /// <summary>
+        /// File encoding to be used. A partial list of possible encodings: https://en.wikipedia.org/wiki/Windows_code_page#List
+        /// </summary>
+        [UIHint(nameof(FileEncoding), "", FileEncoding.Other)]
+        public string EncodingInString { get; set; }
+    }
+
+    public class PathInput : Parameters
+    {
+        /// <summary>
+        /// Path of the file 
+        /// </summary>
+        [DefaultValue("")]
+        public string Path { get; set; }
+    }
+
+    
+    public class WriteBytesInput : Parameters
+    {
+        /// <summary>
+        /// Byte array to be written to the file
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Expression")]
+
+        public object ContentBytes { get; set; }
+        /// <summary>
+        /// Path of the file to be read 
+        /// </summary>
+        [DefaultValue("")]
+        public string Path { get; set; }
+
+    }
+    public class WriteTextInput : Parameters
+    {
+        /// <summary>
+        /// Text content to be written to the file
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
+        /// Path of the file to be read 
+        /// </summary>
+        [DefaultValue("")]
+        public string Path { get; set; }
+
+    }
+
+
 
     public class FileResult : IFileResult
     {

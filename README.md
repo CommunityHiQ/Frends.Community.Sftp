@@ -7,6 +7,11 @@ Frends Community Tasks for Sftp servers.
 - [Installing](#installing)
 - [Tasks](#tasks)
      - [ListDirectory](#ListDirectory)
+     - [Delete](#Delete)
+     - [ReadText](#ReadText)
+     - [ReadBytes](#ReadBytes)
+     - [WriteText](#WriteText)
+     - [WriteBytes](#WriteBytes)
 - [Building](#building)
 - [Contributing](#contributing)
 - [Change Log](#change-log)
@@ -59,6 +64,177 @@ Result is a list of objects with following parameters.
 | LastWriteTimeUtc | `DateTime` | DateTime in UTC time for the last time file/directory was written to. | |
 | LastAccessTime | `DateTime` | DateTime in local time for the last time file/directory was accessed. | |
 | LastWriteTime | `DateTime` | DateTime in local time for the last time file/directory was written to. | |
+
+## Delete
+
+deletes a file on  a SFTP server.
+
+### Parameters
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Server | `string` | Server address. | `sftp.example.com` |
+| Port | `int` | Port number. | `22` |
+| UserName | `string` | User name. | `username` |
+| Password | `string` | Password. | `secret` |
+| Directory | `string` | -not used- | `` |
+| Path | `string` | FullPath of the file to be deleted on the server  | `sftpuser/data.json` |
+
+### Options
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| IncludeType | `Enum (File, Directory, Both)` | - not used - | `File` |
+| FileMask | `string` | - not used -| `*.jpg` |
+| IncludeSubdirectories | `bool` | - not used - |  |
+| PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
+| Passphrase | `string` | Passphrase for the private key file. |  |
+| Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
+| UseKeyboardInteractiveAuthenticationMethod | `bool` | Enable keyboard-interactive authentication | `Yes` |
+
+### Returns
+
+Nothing
+
+## ReadText
+
+Get Text contents of a file on the SFTP server
+
+### Parameters
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Server | `string` | Server address. | `sftp.example.com` |
+| Port | `int` | Port number. | `22` |
+| UserName | `string` | User name. | `username` |
+| Password | `string` | Password. | `secret` |
+| Directory | `string` | -not used- | `` |
+| Path | `string` | FullPath of the file to be read  | `sftpuser/data.json` |
+
+### Options
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| IncludeType | `Enum (File, Directory, Both)` | - not used - | `File` |
+| FileMask | `string` | - not used -| `*.jpg` |
+| IncludeSubdirectories | `bool` | - not used - |  |
+| PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
+| Passphrase | `string` | Passphrase for the private key file. |  |
+| Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
+| UseKeyboardInteractiveAuthenticationMethod | `bool` | Enable keyboard-interactive authentication | `Yes` |
+| FileEncoding                                | Enum           | Encoding for the read content. By selecting 'Other' you can use any encoding. | |
+| EncodingInString                            | string         | The name of encoding to use. Required if the FileEncoding choice is 'Other'. A partial list of supported encoding names: https://msdn.microsoft.com/en-us/library/system.text.encoding.getencodings(v=vs.110).aspx | `iso-8859-1` |
+
+
+### Returns
+
+String containing the file contents. 
+
+
+## ReadBytes
+
+Reads Byte array content of file on the SFTP server
+
+### Parameters
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Server | `string` | Server address. | `sftp.example.com` |
+| Port | `int` | Port number. | `22` |
+| UserName | `string` | User name. | `username` |
+| Password | `string` | Password. | `secret` |
+| Directory | `string` | -not used- | `` |
+| Path | `string` | FullPath of the file to be read on the server  | `sftpuser/data.json` |
+
+### Options
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| IncludeType | `Enum (File, Directory, Both)` | - not used - | `File` |
+| FileMask | `string` | - not used -| `*.jpg` |
+| IncludeSubdirectories | `bool` | - not used - |  |
+| PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
+| Passphrase | `string` | Passphrase for the private key file. |  |
+| Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
+| UseKeyboardInteractiveAuthenticationMethod | `bool` | Enable keyboard-interactive authentication | `Yes` |
+
+
+### Returns
+
+byte array  `byte []` containing the file contents. 
+
+
+## WriteText
+
+Write Text content to a  file on the SFTP server
+
+### Parameters
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Server | `string` | Server address. | `sftp.example.com` |
+| Port | `int` | Port number. | `22` |
+| UserName | `string` | User name. | `username` |
+| Password | `string` | Password. | `secret` |
+| Directory | `string` | -not used- | `` |
+| Content | `string` | Text content to be writte ... | `Jaa jaa` |
+| Path | `string` | FullPath to the  file to be written  | `sftpuser/data.txt` |
+
+
+### Options
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| IncludeType | `Enum (File, Directory, Both)` | - not used - | `File` |
+| FileMask | `string` | - not used -| `*.jpg` |
+| IncludeSubdirectories | `bool` | - not used - |  |
+| PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
+| Passphrase | `string` | Passphrase for the private key file. |  |
+| Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
+| UseKeyboardInteractiveAuthenticationMethod | `bool` | Enable keyboard-interactive authentication | `Yes` |
+| FileEncoding                                | Enum           | Encoding for the read content. By selecting 'Other' you can use any encoding. | |
+| EncodingInString                            | string         | The name of encoding to use. Required if the FileEncoding choice is 'Other'. A partial list of supported encoding names: https://msdn.microsoft.com/en-us/library/system.text.encoding.getencodings(v=vs.110).aspx | `iso-8859-1` |
+
+
+### Returns
+
+Nothing
+
+
+## WriteBytes
+
+Write byte array content to a  file on the SFTP server
+
+### Parameters
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Server | `string` | Server address. | `sftp.example.com` |
+| Port | `int` | Port number. | `22` |
+| UserName | `string` | User name. | `username` |
+| Password | `string` | Password. | `secret` |
+| Directory | `string` | -not used- | `` |
+| Content | `byte []` | byte array to be written ... | `0x12324...`  |
+| Path | `string` | FullPath to the  file to be written  | `sftpuser/data.txt` |
+
+
+### Options
+
+| Name | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| IncludeType | `Enum (File, Directory, Both)` | - not used - | `File` |
+| FileMask | `string` | - not used -| `*.jpg` |
+| IncludeSubdirectories | `bool` | - not used - |  |
+| PrivateKeyFileName | `string` | Full path to private key file. Supports RSA and DSA private key in both OpenSSH and ssh.com format. | `C:\private.key` |
+| Passphrase | `string` | Passphrase for the private key file. |  |
+| Delimiter | `Passphrase` | Passphrase for the private key file. | `secret` |
+| UseKeyboardInteractiveAuthenticationMethod | `bool` | Enable keyboard-interactive authentication | `Yes` |
+
+
+### Returns
+
+Nothing
+
 
 # Building
 

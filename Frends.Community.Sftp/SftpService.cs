@@ -31,5 +31,18 @@ namespace Frends.Community.Sftp
         {
             return _client.ListDirectory(path, listCallback).Select(f => new FileResult(f));
         }
+
+        public void WriteBytes(byte[] bytes, string path, Action<int> listCallback = null)
+        {
+            _client.WriteAllBytes(path, bytes);
+        }
+        public byte[] ReadBytes(string path, Action<int> listCallback = null)
+        {
+            return _client.ReadAllBytes(path);
+        }
+        public void Delete(string path,Action<int> listCallback = null)
+        {
+            _client.Delete(path);
+        }
     }
 }

@@ -157,5 +157,176 @@ namespace Frends.Community.Sftp.Tests
 
             Assert.That(actualFileNames, Is.EquivalentTo(expectedFileNames));
         }
+
+
+        [Test]
+        [Ignore("This is used to test with an actual SFTP server.")]
+        public void ReadFiles()
+        {
+            var input = new PathInput
+            {
+                Server = "localhost",
+                Port = 22,
+                UserName = "sftpuser",
+                Password = "",
+                Directory = "",
+                Path = "sftpuser/data.json"
+            };
+
+            var text_options = new TextOption
+            {
+                IncludeType = IncludeType.Both,
+                IncludeSubdirectories = true,
+                FileEncoding = FileEncoding.UTF8
+            };
+
+            var result = Sftp.ReadText(input, text_options, new System.Threading.CancellationToken());
+            Assert.That(result.Substring(0,1), Is.EqualTo("["));
+
+            var options = new Options
+            {
+                IncludeType = IncludeType.Both,
+                IncludeSubdirectories = true,
+            };
+
+
+            var byteresult = Sftp.ReadBytes(input, options, new System.Threading.CancellationToken());
+            Assert.That(byteresult.GetType().IsArray, Is.EqualTo(true));
+            var strres = System.Text.Encoding.GetEncoding("utf-8").GetString(byteresult);
+            Assert.That(strres.Substring(0, 1), Is.EqualTo("["));
+
+        }
+
+        [Test]
+        [Ignore("This is used to test with an actual SFTP server.")]
+        public void WriteAndDeleteFiles()
+        {
+            var input = new WriteBytesInput
+            {
+                Server = "localhost",
+                Port = 22,
+                UserName = "sftpuser",
+                Password = "",
+                Directory = "",
+                Path = "sftpuser/radom.bytes"
+            };
+
+            var options = new Options
+            {
+                IncludeType = IncludeType.Both,
+                IncludeSubdirectories = true,
+            };
+
+            byte[] arr = new byte[256];
+            Random rnd = new Random();
+            rnd.NextBytes(arr);
+            input.ContentBytes = arr;
+
+            Sftp.WriteBytes(input, options, new System.Threading.CancellationToken());
+
+            var checkinput = new PathInput {
+                Server = "localhost",
+                Port = 22,
+                UserName = "sftpuser",
+                Password = "",
+                Directory = "",
+                Path = "sftpuser/radom.bytes"
+            };
+
+            var arr2 = Sftp.ReadBytes(checkinput, options,new System.Threading.CancellationToken());
+            Assert.That(arr, Is.EqualTo(arr2));
+
+            Sftp.Delete(checkinput, options, new System.Threading.CancellationToken());
+
+            var ex = Assert.Throws<Renci.SshNet.Common.SftpPathNotFoundException>( () => Sftp.ReadBytes(checkinput, options, new System.Threading.CancellationToken()) );
+
+            var text_options = new TextOption
+            {
+                IncludeType = IncludeType.Both,
+                IncludeSubdirectories = true,
+                FileEncoding = FileEncoding.UTF8
+            };
+            var txtinput = new WriteTextInput
+            {
+                Server = "localhost",
+                Port = 22,
+                UserName = "sftpuser",
+                Password = "",
+                Directory = "",
+                Path = "sftpuser/hui.txt"
+            };
+
+            txtinput.Content = "Hui";
+
+            Sftp.WriteText(txtinput, text_options, new System.Threading.CancellationToken());
+            checkinput = new PathInput
+            {
+                Server = "localhost",
+                Port = 22,
+                UserName = "sftpuser",
+                Password = "",
+                Directory = "",
+                Path = "sftpuser/hui.txt"
+            };
+
+
+            var result = Sftp.ReadText(checkinput, text_options, new System.Threading.CancellationToken());
+            Assert.That(result,Is.EqualTo(txtinput.Content));
+
+            Sftp.Delete(checkinput, (Options) text_options, new System.Threading.CancellationToken());
+            ex = Assert.Throws<Renci.SshNet.Common.SftpPathNotFoundException>(() => Sftp.ReadText(checkinput, text_options, new System.Threading.CancellationToken()));
+
+
+
+        }
+        [Test]
+        [Ignore("This is used to test with an actual SFTP server.")]
+        public void TestEncodings()
+        {
+            foreach (var enc in new FileEncoding[] { FileEncoding.UTF8, FileEncoding.ANSI, FileEncoding.ASCII, FileEncoding.Unicode, FileEncoding.Other })
+            {
+
+                
+
+                var txtinput = new WriteTextInput
+                {
+                    Server = "localhost",
+                    Port = 22,
+                    UserName = "sftpuser",
+                    Password = "",
+                    Directory = "",
+                    Path = "sftpuser/hui.txt"
+                };
+                txtinput.Content = "Hui";
+                var text_options = new TextOption
+                {
+                    IncludeType = IncludeType.Both,
+                    IncludeSubdirectories = true,
+                    FileEncoding = enc
+                };
+                if (enc == FileEncoding.Other)
+                {
+                    text_options.EncodingInString = "Ei löydy";
+                    Assert.Throws<System.ArgumentException>(() => Sftp.WriteText(txtinput, text_options, new System.Threading.CancellationToken()));
+                    text_options.EncodingInString = "utf-7";
+                    Sftp.WriteText(txtinput, text_options, new System.Threading.CancellationToken());
+                } else
+                {
+                    Sftp.WriteText(txtinput, text_options, new System.Threading.CancellationToken());
+                }
+                
+                var checkinput = new PathInput
+                {
+                    Server = "localhost",
+                    Port = 22,
+                    UserName = "sftpuser",
+                    Password = "",
+                    Directory = "",
+                    Path = "sftpuser/hui.txt"
+                };
+                Sftp.Delete(checkinput, (Options)text_options, new System.Threading.CancellationToken());
+                Assert.Throws<Renci.SshNet.Common.SftpPathNotFoundException>(() => Sftp.ReadText(checkinput, text_options, new System.Threading.CancellationToken()));
+            }
+        }
     }
 }
