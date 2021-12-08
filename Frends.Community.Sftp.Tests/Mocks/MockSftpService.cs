@@ -37,5 +37,18 @@ namespace Frends.Community.Sftp.Tests.Mocks
                     new MockFileResult { FullPath = "/documents/subdir/anotherFileInSubdir.docx", IsDirectory = false, IsFile = true, Length = 24512, Name = "anotherFileInSubdir.docx", LastWriteTimeUtc = new DateTime(2020,11,16,13,1,0), LastAccessTimeUtc = new DateTime(2020,12,8,12,0,0), LastWriteTime = new DateTime(2020,11,16,13,1,0), LastAccessTime = new DateTime(2020,12,8,12,0,0) }
                 };
         }
+        public void Delete(string path, Action<int> listCallback = null)
+        {
+
+        }
+        public void WriteBytes(byte[] bytes, string path, Action<int> listCallback = null)
+        {
+
+        }
+        public byte[] ReadBytes(string path, Action<int> listCallback = null)
+        {
+            return System.Text.Encoding.GetEncoding("utf-8").GetBytes("1231232");
+        }
+
     }
 }
