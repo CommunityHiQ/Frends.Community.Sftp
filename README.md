@@ -99,4 +99,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 | 1.3.0   | All possible auth combinations added (username, password, private key file, passphrase, keyboard interactive) |
 | 2.0.0   | Version number update to enable easier update from older sftp package. |
 | 2.1.0   | Added option to include subdirectories. |
-| 2.1.1   | Updated the dependency versions so the task would work with the new SFTP tasks. |
+| 2.1.1   | Updated the dependency versions so the task would work with the new SFTP tasks and removed symbols from workflows. |
