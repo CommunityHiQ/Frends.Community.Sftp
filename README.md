@@ -100,3 +100,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 | 2.0.0   | Version number update to enable easier update from older sftp package. |
 | 2.1.0   | Added option to include subdirectories. |
 | 2.1.1   | Updated the dependency versions so the task would work with the new SFTP tasks and removed symbols from workflows. |
+| 2.1.2   | Fixed a bug with task iterating through . and .. directories over and over again. |
