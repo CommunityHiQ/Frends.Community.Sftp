@@ -59,17 +59,17 @@ namespace Frends.Community.Sftp
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
+                if (file.Name == "." || file.Name == "..")
+                    continue;
+
                 if (options.IncludeType == IncludeType.Both
-                    || (file.IsDirectory && options.IncludeType == IncludeType.Directory)
-                    || (file.IsFile && options.IncludeType == IncludeType.File))
-                {
+                || (file.IsDirectory && options.IncludeType == IncludeType.Directory)
+                || (file.IsFile && options.IncludeType == IncludeType.File))
                     if (Regex.IsMatch(file.Name, regexStr, RegexOptions.IgnoreCase))
                         directoryList.Add(file);
-                }
+
                 if (file.IsDirectory && options.IncludeSubdirectories)
-                {
-                    directoryList.AddRange(ListDirectoryRecursiveInternal(regexStr, sftp, file.FullPath, options, cancellationToken));
-                }
+                    directoryList.AddRange(ListDirectoryRecursiveInternal(regexStr, sftp, file.FullPath, options, cancellationToken)); 
             }
             return directoryList;
         }
