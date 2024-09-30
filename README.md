@@ -91,13 +91,14 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 # Change Log
 
-| Version | Changes |
-| ------- | ------- |
-| 1.0.0   | The initial version. |
-| 1.1.0   | DateTimes added to the result objects. |
-| 1.2.0   | Added Keyboard-interactive auth |
-| 1.3.0   | All possible auth combinations added (username, password, private key file, passphrase, keyboard interactive) |
-| 2.0.0   | Version number update to enable easier update from older sftp package. |
-| 2.1.0   | Added option to include subdirectories. |
-| 2.1.1   | Updated the dependency versions so the task would work with the new SFTP tasks and removed symbols from workflows. |
-| 2.1.2   | Fixed a bug with task iterating through . and .. directories over and over again. |
+| Version | Changes                                                                                                                                                                                  |
+|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.0.0  | The initial version.                                                                                                                                                                     |
+| 1.1.0  | DateTimes added to the result objects.                                                                                                                                                   |
+| 1.2.0  | Added Keyboard-interactive auth                                                                                                                                                          |
+| 1.3.0  | All possible auth combinations added (username, password, private key file, passphrase, keyboard interactive)                                                                            |
+| 2.0.0  | Version number update to enable easier update from older sftp package.                                                                                                                   |
+| 2.1.0  | Added option to include subdirectories.                                                                                                                                                  |
+| 2.1.1  | Updated the dependency versions so the task would work with the new SFTP tasks and removed symbols from workflows.                                                                       |
+| 2.1.2  | Fixed a bug with task iterating through . and .. directories over and over again.                                                                                                        |
+| 3.0.0  | Updated SSH.NET dependency from 2020.0.2 to 2024.1.0. Breaking change due to to several major version update. See SSH.NET version history at https://github.com/sshnet/SSH.NET/releases. |

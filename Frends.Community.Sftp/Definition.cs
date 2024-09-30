@@ -117,7 +117,7 @@ namespace Frends.Community.Sftp
         public DateTime LastWriteTime { get; }
         public DateTime LastAccessTime { get; }
 
-        public FileResult(SftpFile file)
+        public FileResult(ISftpFile file)
         {
             this.FullPath = file.FullName;
             this.IsDirectory = file.IsDirectory;

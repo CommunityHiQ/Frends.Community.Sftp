@@ -2,14 +2,14 @@
 
   <PropertyGroup>
 	<TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
-    <authors>HiQ Finland</authors>
-    <copyright>HiQ Finland</copyright>
+    <authors>Frends</authors>
+    <copyright>Frends</copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/CommunityHiQ/Frends.Community.Sftp</PackageProjectUrl>
     <IncludeSource>true</IncludeSource>
     <PackageTags>Frends</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>2.1.2</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="SSH.NET" Version="2020.0.2" />
+    <PackageReference Include="SSH.NET" Version="2024.1.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
